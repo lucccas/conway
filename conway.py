@@ -91,4 +91,4 @@ class Conway(ConwayBase):
         pass
     
     def show_field(self) -> np.ndarray:
-        pass
+        return self.current_field

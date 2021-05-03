@@ -10,7 +10,7 @@ onto a simulation field.
 import numpy as np
 
 
-def insert_pattern(base, pattern, offset=None):
+def insert_pattern(base: np.ndarray, pattern: np.ndarray, offset=None):
     """
     Takes a base simulation field and places a given pattern with an offset
     onto it. When offset is None, the object is placed into the middle
@@ -34,7 +34,15 @@ def insert_pattern(base, pattern, offset=None):
     field : TYPE
         The simulation field with the pattern placed.
     """
-    pass
+    if type(pattern) == list:
+        pattern = np.array(pattern)
+
+    if offset is None:
+        base[:pattern.shape[0], :pattern.shape[1]] = pattern
+    else:
+        base[offset[0]:pattern.shape[0]+offset[0], offset[1]:pattern.shape[1]+offset[1]] = pattern
+    
+    return base
 
 
 BLINKER = [[1, 1, 1]]

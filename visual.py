@@ -14,7 +14,7 @@ from pygame.locals import KEYDOWN, K_BACKSPACE, QUIT, HWSURFACE, DOUBLEBUF
 from conway import Conway
 
 
-def pygame_loop(conway: Conway, screen_size: tuple = (1600, 800), fps: int = 30):
+def pygame_loop(conway: Conway, screen_size: tuple = (800, 800), fps: int = 30):
     """
     Function to display the evolution of Conway's Game of Life or any other
     simulation with a 2D output.
@@ -64,11 +64,15 @@ if __name__ == '__main__':
     import numpy as np
     from configs import *
     base = np.zeros((15, 20))
-    start_config = insert_pattern(base, PULSER).T
-    start_config = insert_pattern(start_config, BLINKER, offset=(7, 5))
-    start_config = insert_pattern(start_config, BLINKER, offset=(-7, 5))
-    start_config = insert_pattern(start_config, BLINKER, offset=(7, -5))
-    start_config = insert_pattern(start_config, BLINKER, offset=(-7, -5))
-    screen_size = np.array(start_config.shape) * 80
+
+    #custom
+    start_config = insert_pattern(base, BLINKER, offset=(7, 5))
+
+    #start_config = insert_pattern(base, PULSER)
+    #start_config = insert_pattern(start_config, BLINKER, offset=(7, 5))
+    #start_config = insert_pattern(start_config, BLINKER, offset=(-7, 5))
+    #start_config = insert_pattern(start_config, BLINKER, offset=(7, -5))
+    #start_config = insert_pattern(start_config, BLINKER, offset=(-7, -5))
+    screen_size = (800, 800)#np.array(start_config.shape) * 80
     conway = Conway(start_config)
     pygame_loop(conway, screen_size=screen_size, fps=4)
