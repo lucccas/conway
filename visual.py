@@ -38,15 +38,24 @@ def pygame_loop(conway: Conway, screen_size: tuple = (800, 800), fps: int = 30):
     screen = pygame.display.set_mode(screen_size, HWSURFACE | DOUBLEBUF)
     running = True
     clock = pygame.time.Clock()
+
+    colors = np.array([[155,255,155], [0,20,220]])
     while running:
         pygame.display.update()
         conway.update_field()
         arr = conway.show_field()
-        surf = pygame.Surface(conway.shape)
-        surfarray.blit_array(surf, arr)
+
+        surf = pygame.surfarray.make_surface(colors[arr])
         surf = pygame.transform.scale(surf, screen_size)
-        screen.blit(surf, (0, 0))
+        screen.blit(surf, (0,0))
+
         clock.tick(fps)
+
+        #surf = pygame.Surface(conway.shape)
+        #surfarray.blit_array(surf, arr)
+        #surf = pygame.transform.scale(surf, screen_size)
+        #screen.blit(surf, (0, 0))
+        #clock.tick(fps)
         pygame.display.set_caption(f"Conway's Game of Life | fps: {clock.get_fps():.3}")
         for event in pygame.event.get():
             if event.type == KEYDOWN:
@@ -63,12 +72,12 @@ def pygame_loop(conway: Conway, screen_size: tuple = (800, 800), fps: int = 30):
 if __name__ == '__main__':
     import numpy as np
     from configs import *
-    base = np.zeros((15, 20))
+    base = np.zeros((150, 200))
 
     #custom
-    start_config = insert_pattern(base, BLINKER, offset=(7, 5))
+    start_config = insert_pattern(base, PULSER, offset=(22, 22))
 
-    #start_config = insert_pattern(base, PULSER)
+    #start_config = insert_pattern(base, PULSER).T
     #start_config = insert_pattern(start_config, BLINKER, offset=(7, 5))
     #start_config = insert_pattern(start_config, BLINKER, offset=(-7, 5))
     #start_config = insert_pattern(start_config, BLINKER, offset=(7, -5))

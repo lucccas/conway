@@ -88,7 +88,33 @@ class Conway(ConwayBase):
         pass
     
     def update_field(self):
-        pass
+        newField = np.array(self.current_field, copy=True)
+
+        for i, row in enumerate(self.current_field):
+            for j, cell in enumerate(row):
+                count = self.getCellsAround(i, j)
+                if count < 2 or count > 3:
+                    cell = 0
+                if count == 3:
+                    cell = 1
+
+                newField[i, j] = cell
+        self.current_field = newField
+
+    def getCellsAround(self, i, j):
+        count = 0
+        for n1 in range(i-1, i+2):
+            for n2 in range(j-1, j+2):
+                if n1 != i or n2 != j:
+                    #print("n1: {}, n2: {}".format(n1,n2))
+                    try:
+                        count += self.current_field[n1,n2]
+                    except: 
+                        pass
+
+        return count
+
+
     
     def show_field(self) -> np.ndarray:
-        return self.current_field
+        return self.current_field.astype(int)
